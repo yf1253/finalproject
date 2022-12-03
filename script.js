@@ -7,8 +7,9 @@ let catchSound;
 //Variables for falling gifts
 let giftlist = [];
 let santa;
+let newgift;
 
-let screen = "screen2"; //default screen
+let screen = "screen1"; //default screen
 let point = 0; //starting point
 
 let ngift; //new gift
@@ -28,6 +29,7 @@ function setup() {
 createCanvas(1200, 800);
 background(landscape); //add winter landscape background
 santa = new Sleigh(700,600,0,0);
+newgift = new FallingGift(random(0, width-20), 0, random(0), random(0.7, 1.0), 30);
 }
 
 function draw() {
@@ -60,8 +62,8 @@ textAlign(CENTER, CENTER);
     text("SCORE : " + point, 100, 50);
 
   // Feature that keeps the gifts coming
-  if (millis() > ngift) {
-    let newgift = new FallingGift(random(0, width-20), 0, random(0), random(0.7, 1.0), 30);
+  if (millis() > ngift) { //after 3 seconds (3000 milliseconds) have passed, new gift falling...
+    //let newgift = new FallingGift(random(0, width-20), 0, random(0), random(0.7, 1.0), 30);
     giftlist.push(newgift);
     ngift = millis() + giftTime;
   }
@@ -75,12 +77,9 @@ textAlign(CENTER, CENTER);
     point = point + 1;
     }
   }
-
   giftlist = giftlist.filter(giftNoHits);
-
   santa.display();
   santa.move();
-
   }
 
 if (screen == "screen3") {
@@ -110,22 +109,21 @@ function giftNoHits(FallingGift) {
 function keyPressed() {
   // a: d: w: s:
   if (keyCode == 87) {
-    santa.ySpeed = -1; // w 
+    santa.ySpeed = -1; // w key
   }
   if (keyCode == 83) {
-    santa.ySpeed = 1; // s
+    santa.ySpeed = 1; // s key
   }
   if (keyCode == 65) {
-    santa.xSpeed = -1; // a
+    santa.xSpeed = -1; // a key
   }
   if (keyCode == 68) {
-    santa.xSpeed = 1; // d 
+    santa.xSpeed = 1; // d key
   }
-  if (keyCode == 32) {
+  if (keyCode == 32) { //space key 
     if (screen == "screen1") {
       screen == "screen2";
       ngift = millis();
-
     }
   }
 }
