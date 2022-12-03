@@ -8,10 +8,9 @@
     }
     display(){
      image(santaSleigh, this.x, this.y, 300, 150); 
-    }
-    move(){
-    this.x = this.x + this.xSpeed; 
-    this.y = this.y + this.ySpeed;
+
+     this.x = this.x + this.xSpeed; 
+     this.y = this.y + this.ySpeed;
     }
 
 }

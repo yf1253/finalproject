@@ -11,10 +11,7 @@ class FallingGift {
 
     display() { 
       //set image
-      image(giftG, this.x, this.y, 50, 50);
-    }
-
-    move(){
+      image(gift, this.x, this.y, 50, 50);
       //set moving speed
       this.x = this.x + this.xSpeed;
       this.y = this.y + this.ySpeed;
@@ -27,8 +24,7 @@ class FallingGift {
       }
       //If the gift hits the bottom of the screen, it's game over
       if (this.y > height + this.size / 2) {
-      screen = 2; //game over screen 
+      screen == "screen3"; //game over screen 
       }
     }
-}
-     
+  }    

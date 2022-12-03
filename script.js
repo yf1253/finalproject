@@ -1,19 +1,29 @@
 
+//start with the home page with game information 
+let screen = "screen1"; //default screen
+
+//game starting point
+let point = 0; 
+
 //Variables for preload images
-let santaSleigh, gift, landscape, firstScreen;
+let santaSleigh;
+let gift;
+let landscape; 
+let firstScreen;
+
 //Variables for preload musics
 let bgMusic;
 let catchSound;
-//Variables for falling gifts
-let giftlist = [];
-let santa;
-let newgift;
 
-let screen = "screen1"; //default screen
-let point = 0; //starting point
+//Variables falling gifts
+let giftlist = []; //
 
 let ngift; //new gift
 let giftTime = 3000; //gift waiting time
+
+//santa sleigh
+let santa;
+let newgift;
 
 function preload() {
   bgMusic = loadSound("songs/christmas.mp3");
@@ -29,7 +39,8 @@ function setup() {
 createCanvas(1200, 800);
 background(landscape); //add winter landscape background
 santa = new Sleigh(700,600,0,0);
-newgift = new FallingGift(random(0, width-20), 0, random(0), random(0.7, 1.0), 30);
+// newgift = new FallingGift(random(0, width-20), 0, random(0), random(0.7, 1.0), 30);
+
 }
 
 function draw() {
@@ -51,10 +62,10 @@ textAlign(CENTER, CENTER);
 
 //Screen 2: The page for the game itself
   if (screen == "screen2") {
-    background(landscape);
-    image(landscape);
+    background(firstScreen); //screen for game itself
+    image(landscape,0,0);
     santa.display(); //display santa sleigh
-    santa.move(); //move santa sleigh
+    // santa.move(); //move santa sleigh
     fill(0);
     stroke(5);
     textSize(25);
@@ -63,23 +74,23 @@ textAlign(CENTER, CENTER);
 
   // Feature that keeps the gifts coming
   if (millis() > ngift) { //after 3 seconds (3000 milliseconds) have passed, new gift falling...
-    //let newgift = new FallingGift(random(0, width-20), 0, random(0), random(0.7, 1.0), 30);
+    let newgift = new FallingGift(random(0, width-20), 0, random(0), random(0.7, 1.0), 50);
     giftlist.push(newgift);
     ngift = millis() + giftTime;
   }
   //for 
   for (let newgift of giftlist) {
     newgift.display();
-    newgift.move();
+    // newgift.move();
   // Collision between Santa Claus and gifts
   if (dist(newgift.x, newgift.y, santa.x, santa.y) < 20) {
-    newgift.hits = newgift.hits + 1;
+    newgift.hits += 1;
     point = point + 1;
     }
   }
   giftlist = giftlist.filter(giftNoHits);
   santa.display();
-  santa.move();
+  // santa.move();
   }
 
 if (screen == "screen3") {
