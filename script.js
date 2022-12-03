@@ -1,140 +1,132 @@
 
-//start with the home page with game information 
-let screen = "screen1"; //default screen
+// Home page with information about the game
+let screen = "screen1";
 
-//game starting point
-let point = 0; 
+let point = 0;
 
-//Variables for preload images
-let santaSleigh;
-let gift;
-let landscape; 
-let firstScreen;
+let ChristmasSleigh; //santa sleigh
+let giftImage; //Image gifts
+let landscape; //Image winter landscape
+let firstscreen;
+let gameoverscreen;
 
-//Variables for preload musics
-let bgMusic;
-let catchSound;
+let tGift;//time for new gifts coming
+let timeGift = 3000; //gift waiting time
 
-//Variables falling gifts
-let giftlist = []; //
+let giftList = [];
+let sleigh;
 
-let ngift; //new gift
-let giftTime = 3000; //gift waiting time
-
-//santa sleigh
-let santa;
-let newgift;
-
-function preload() {
-  bgMusic = loadSound("songs/christmas.mp3");
-  //christmasSong.setVolume(0.1);
-  catchSound = loadSound('songs/catch.mp3');
-  santaSleigh = loadImage('images/santa.png');
-  gift = loadImage('images/giftG.png');
-  landscape = loadImage('images/landscape.png');
-  firstScreen = loadImage('images/firstScreen.png');
-}
 
 function setup() {
-createCanvas(1200, 800);
-background(landscape); //add winter landscape background
-santa = new Sleigh(700,600,0,0);
-// newgift = new FallingGift(random(0, width-20), 0, random(0), random(0.7, 1.0), 30);
-
+  createCanvas(1200, 800);
+  ChristmasSleigh = loadImage("images/santa.png");
+  giftImage = loadImage("images/giftG.png ");
+  landscape = loadImage("images/landscape.png");
+  firstscreen = loadImage("images/firstScreen.png");
+  gameoverscreen = loadImage("images/gameover.png");
+  sleigh = new santaSleigh (700,600,0,0);
 }
 
 function draw() {
-noStroke();
-fill(0);
-textAlign(CENTER, CENTER);
+  noStroke();
+  fill(220);
+  textAlign(CENTER, CENTER);
 
-//Screen 1: game introduction
+   //Text on home page
   if (screen == "screen1") {
-    background(firstScreen);
-    // textSize(35);
-    // textStyle(BOLD);
-    // text("Santa has to catch the gifts before they hit the ground.", width / 2, 500);
-    // textSize(25);
-    // text("Use potentiometers to control Santa", width / 2, 600);
-    // textSize(25);
-    // text("Press space to start the game", width / 2, 700);
-   }
+    background(firstscreen);
+    // textSize(20);
+    // text("Julemanden skal fange øllene før de rammer jorden. ", width / 2, 100);
+    // textSize(15);
+    // text("Tryk med pilen på skærmen og derefter mellemrum for at starte spillet", width / 2, height / 2);
+    // textSize(15);
+    // text("Brug tasterne w, a, s og d, til at styre julemanden.", width / 2, 200);
 
-//Screen 2: The page for the game itself
+  }
+
+  //The page for the game itself
   if (screen == "screen2") {
-    background(firstScreen); //screen for game itself
-    image(landscape,0,0);
-    santa.display(); //display santa sleigh
-    // santa.move(); //move santa sleigh
-    fill(0);
+    background(0, 150, 0);
+    imageMode(CENTER); 
+    image(landscape,600,400,1200,800);
+    sleigh.display();
+    fill(0, 0, 0);
     stroke(5);
     textSize(25);
-    //textStyle(BOLD);
-    text("SCORE : " + point, 100, 50);
+    text("POINT : " + point, 100, 50);
 
-  // Feature that keeps the gifts coming
-  if (millis() > ngift) { //after 3 seconds (3000 milliseconds) have passed, new gift falling...
-    let newgift = new FallingGift(random(0, width-20), 0, random(0), random(0.7, 1.0), 50);
-    giftlist.push(newgift);
-    ngift = millis() + giftTime;
-  }
-  //for 
-  for (let newgift of giftlist) {
-    newgift.display();
-    // newgift.move();
-  // Collision between Santa Claus and gifts
-  if (dist(newgift.x, newgift.y, santa.x, santa.y) < 20) {
-    newgift.hits += 1;
-    point = point + 1;
+     // Is it time for a new gift?
+    // Feature that keeps the gifts coming
+    if (millis() > tGift) { ////set up parameters for copies of gifts
+      let ArrayGifts = new gift(random(0, width-20), 0, random(0), random(0.7, 1.0), 30);
+      giftList.push(ArrayGifts);
+      tGift = millis() + timeGift;
     }
-  }
-  giftlist = giftlist.filter(giftNoHits);
-  santa.display();
-  // santa.move();
-  }
 
-if (screen == "screen3") {
-   gameover();
-   }
+    for (let fallingGift of giftList) {
+      fallingGift.display();
+
+      // Collision between Santa Claus and gift
+      if (dist(fallingGift.x, fallingGift.y, sleigh.x, sleigh.y) < 120) {
+        fallingGift.hits += 1;
+        point = point + 1;
+      }
+    }
+
+
+    giftList = giftList.filter(giftNoHits);
+
+    sleigh.display();
+
+  }
+  if (screen == "screen3") {
+    gameover();
+  }
 }
 
-// Gameover screen
+
+// Gameover text
 function gameover() {
-  background(landscape);
+  background(0, 0, 0);
+  imageMode(CENTER); 
+  image(gameoverscreen,600,400,1200,800);
   textSize(60);
   fill(150, 0, 0);
-  text("GAME OVER", 250, 175);
+  //text("GAME OVER", 250, 175);
+
 }
 
-//gifts not hit ground
-function giftNoHits(FallingGift) {
-  if (FallingGift.hits == 0) {
+
+
+function giftNoHits(gift) {
+  if (gift.hits == 0) {
     return true; // keep the gift
   } else {
-    return false; // don't keep 
+    return false; // Do not keep
   }
 }
 
+// Arrow keys 
 
-// Arrow keys
 function keyPressed() {
   // a: d: w: s:
   if (keyCode == 87) {
-    santa.ySpeed = -1; // w key
+    sleigh.speedY = -1; // w 
   }
   if (keyCode == 83) {
-    santa.ySpeed = 1; // s key
+    sleigh.speedY = 1; // s
   }
   if (keyCode == 65) {
-    santa.xSpeed = -1; // a key
+    sleigh.speedX = -1; // a
   }
   if (keyCode == 68) {
-    santa.xSpeed = 1; // d key
+    sleigh.speedX = 1; // d 
   }
-  if (keyCode == 32) { //space key 
+  if (keyCode == 32) {
     if (screen == "screen1") {
-      screen == "screen2";
-      ngift = millis();
+      screen = "screen2";
+      tGift = millis();
+
     }
   }
 }
@@ -142,34 +134,15 @@ function keyPressed() {
 
 function keyReleased() {
   if (keyCode == 87) {
-    santa.ySpeed = 0;
+    sleigh.speedY = 0;
   }
   if (keyCode == 83) {
-    santa.ySpeed = 0;
+    sleigh.speedY = 0;
   }
   if (keyCode == 65) {
-    santa.xSpeed = 0;
+    sleigh.speedX = 0;
   }
   if (keyCode == 68) {
-    santa.xSpeed = 0;
+    sleigh.speedX = 0;
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- 
- 
- 
-
