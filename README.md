@@ -1,4 +1,4 @@
-Final project - catch game
+# Final project - catch game
 Github page: https://yf1253.github.io/finalproject.github.io/
 
 Instruction:
