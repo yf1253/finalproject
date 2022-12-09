@@ -6,7 +6,8 @@ let screen = "screen1";
 let point = 0;
 
 //preload images
-let ChristmasSleigh; //santa sleigh
+let SleighLeft; //santa sleigh facing left
+let SleighRight; //sleigh facing right
 let giftImage; //Image gifts
 let landscape; //Image winter landscape
 let firstscreen; //starting screen
@@ -25,7 +26,8 @@ let giftList = [];
 let sleigh; 
 
 function preload(){
-  ChristmasSleigh = loadImage("images/santa.png");
+  SleighLeft = loadImage("images/santa.png");
+  SleighRight = loadImage("images/sleighRight.png");
   giftImage = loadImage("images/giftG.png ");
   landscape = loadImage("images/landscape.png");
   firstscreen = loadImage("images/firstScreen.png");
@@ -38,6 +40,7 @@ function preload(){
 function setup() {
   createCanvas(1200, 800);
   sleigh = new santaSleigh (700,600,0,0);
+
 }
 
 function draw() {
@@ -54,7 +57,7 @@ function draw() {
     // textSize(15);
     // text("Press space to start the game", width / 2, height / 2);
     // textSize(15);
-    // text("Use the w, a, s and d keys to control Santa", width / 2, 200);
+    // text("Use the w, a, s and d keys to control sleigh", width / 2, 200);
   }
 
   //The page for the game itself
@@ -124,18 +127,28 @@ function giftNoHits(gift) {
 function keyPressed() {
   // a: d: w: s:
   if (keyCode == UP_ARROW) {
-    sleigh.speedY = -1; // w = 87
+    if (sleigh.y > 50) {
+      sleigh.speedY = -1; // w = 87
+    }
   }
   if (keyCode == DOWN_ARROW) {
-    sleigh.speedY = 1; // s = 83
+    if (sleigh.y < height - 50){
+      sleigh.speedY = 1; // s = 83
+    }
   }
   if (keyCode == LEFT_ARROW) {
-    sleigh.speedX = -1; // a = 65
+    if (sleigh.x > 50){
+      sleigh.speedX = -1; // a = 65
+      sleigh.flyLeft(); 
+      }
   }
   if (keyCode == RIGHT_ARROW) {
-    sleigh.speedX = 1; // d = 68
+    if (sleigh.x < width - 50) {
+      sleigh.speedX = 1; // d = 68
+      sleigh.flyRight();
+      }
   }
-
+  
   // start the game(scrren2) with spacebar
   if (keyCode == 32) {
     if (screen == "screen1") {
