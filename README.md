@@ -7,5 +7,5 @@ Instruction:
 
 or
 
--Use joystick to control Santa sleign
+- Use joystick to control Santa sleign
 
