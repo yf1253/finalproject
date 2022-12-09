@@ -11,7 +11,7 @@ References:
   - https://www.youtube.com/watch?v=gSag3HmyOgE
   - https://www.arduino.cc/reference/en/language/functions/usb/keyboard/keyboardpress/
   - https://www.youtube.com/watch?v=29QYRpppHv8
-  - 
+  - https://arduino-tutorials.net/tutorial/read-analog-ps2-joystick-with-push-button-on-arduino
 */
 
 
