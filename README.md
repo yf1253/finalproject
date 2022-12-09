@@ -5,7 +5,7 @@ Instruction:
 - Press the space bar on your keyboard to start the game
 - Press up, down, left, and right arrow keys to control Santa sleigh
 
-or
+ or
 
 - Use joystick to control Santa sleign
 
