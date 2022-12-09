@@ -1,4 +1,4 @@
-# Final project - catch game 
+Final project - catch game 
 Instructions:
 -
 -
