@@ -46,8 +46,6 @@ boolean isRightKeyPressed = false;
 boolean isDownKeyPressed = false;
 boolean isLeftKeyPressed = false;
 
-//int prevButtonMouseToggleVal = HIGH;
-
 void setup() {
 
   pinMode(BUTTON_SPACEBAR_PIN, INPUT_PULLUP);
