@@ -7,8 +7,8 @@ class gift {
     this.size = giftSize; // the size of the gift
     this.xSpeed = xSpeed; // x axis speed
     this.ySpeed = ySpeed; // y axis speed
-    this.hits = 0; //for setting game over when gift hits ground
-  }
+    this.hits = 0; //for when gift hits santa's sleigh
+
   display() {
     image(giftImage, this.x, this.y, 50, 50); //image(img, x, y, [width], [height])
 
